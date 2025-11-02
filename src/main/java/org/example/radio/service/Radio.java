@@ -3,23 +3,37 @@ package org.example.radio.service;
 public class Radio {
     private int currentStation;
     private int currentVolume;
+    private int countStation = 10;
+    private int minStation = 0;
+    private int maxStation = countStation - 1;
+    private int minVolume = 0;
+    private int maxVolume = 100;
+
+
+    public Radio() {
+    }
+
+    public Radio(int countStation) {
+        this.countStation = countStation;
+        this.maxStation = countStation - 1;
+    }
 
     public int getCurrentStation() {
         return currentStation;
     }
 
     public void setStation(int newStation) {
-        if (newStation < 0) {
+        if (newStation < minStation) {
             return;
         }
-        if (newStation > 9) {
+        if (newStation > maxStation) {
             return;
         }
         currentStation = newStation;
     }
 
     public void nextStation() {
-        if (currentStation >= 9) {
+        if (currentStation == maxStation) {
             currentStation = 0;
         } else {
             currentStation++;
@@ -29,7 +43,7 @@ public class Radio {
 
     public void prevStation() {
         if (currentStation == 0) {
-            currentStation = 9;
+            currentStation = maxStation;
         } else {
             currentStation--;
         }
@@ -41,24 +55,28 @@ public class Radio {
     }
 
     public void setVolume(int newVolume) {
-        if (newVolume < 0) {
+        if (newVolume < minVolume) {
             return;
         }
-        if (newVolume > 10) {
+        if (newVolume > maxVolume) {
             return;
         }
         currentVolume = newVolume;
     }
 
     public void increaseVolume() {
-        if (currentVolume < 10) {
+        if (currentVolume < maxVolume) {
             currentVolume++;
+        } else {
+            currentVolume = maxVolume;
         }
     }
 
     public void decreaseVolume() {
-        if (currentVolume > 0) {
+        if (currentVolume > minVolume) {
             currentVolume--;
+        } else {
+            currentVolume = minVolume;
         }
     }
 }
